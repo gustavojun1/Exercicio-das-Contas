@@ -5,13 +5,21 @@ import utilidades.Data;
 public class TesteContas {
 
 	public static void main(String[] args) {
-		Correntista Alberto = new Correntista("1234567890", "Alberto");
-		Agencia Nubank1 = new Agencia("840", "Nubank");
-		Conta conta1 = CriadorContas.criarConta(300, Alberto, "1", Nubank1, new Data(11, 2, 2003));
-		Conta conta2 = CriadorContas.criarConta(500, Alberto, "2", Nubank1, new Data(25, 5, 1990));
-		System.out.println(conta1.getSaldo() + " | " + conta2.getSaldo());
-		conta1.fazerTransferencia(conta2, 200);
-		System.out.println(conta1.getSaldo() + " | " + conta2.getSaldo());	
+		Correntista Jun = new Correntista("1234567890", "Jun");
+		Correntista Mamae = new Correntista("0987654321", "Mamae");
+		Agencia Nubank = new Agencia("123", "Nubank");
+		Agencia Bradesco = new Agencia("456", "Bradesco");
+		Conta Conta_do_Jun = new ContaCorrente("111", 500, Jun, new Data(01, 02, 2022), Nubank, 15);
+		Conta Conta_da_Mamae = new ContaCorrente("222", 1000, Mamae, new Data(31, 12, 2022), Bradesco, 5);
+		
+		System.out.println("Saldo do " + Conta_do_Jun.getCorrentista().nome + ": " + Conta_do_Jun.getSaldo());
+		System.out.println("Saldo da " + Conta_da_Mamae.getCorrentista().nome + ": " + Conta_da_Mamae.getSaldo());
+		
+		Conta_da_Mamae.fazerTransferencia(Conta_do_Jun, 200);
+//		Conta_do_Jun.fazerTransferencia(Conta_da_Mamae, 300);
+		
+		System.out.println("Saldo do " + Conta_do_Jun.getCorrentista().nome + ": " + Conta_do_Jun.getSaldo());
+		System.out.println("Saldo da " + Conta_da_Mamae.getCorrentista().nome + ": " + Conta_da_Mamae.getSaldo());
 	}
 	
 }

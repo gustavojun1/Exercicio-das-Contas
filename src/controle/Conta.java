@@ -5,7 +5,7 @@ import utilidades.Data;
 public class Conta {
 
 	private String numero;
-	private double saldo;
+	protected double saldo;
 	private boolean atividade;
 	private Correntista correntista;
 	private Data abertura;
@@ -32,26 +32,32 @@ public class Conta {
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
 	}
+	public Correntista getCorrentista() {
+		return correntista;
+	}
 	
 	public boolean operacaoPossivel(Conta c, double quantia) {
 		return quantia > 0 && c.atividade ? true : false;
 	}
-	public void depositar(double quantia) {
+	public boolean depositar(double quantia) {
 		if(operacaoPossivel(this, quantia)) {
 			saldo += quantia;
+			return true;
 		}
+		return false;
 	}	
 	public boolean sacar(double quantia) {
-		if(operacaoPossivel(this, quantia)) {
+		if(operacaoPossivel(this, quantia) && saldo >= quantia) {
 			saldo -= quantia;
 			return true;
 		}
 		return false;
 	}
+	// não usar "sacar" ou "depositar" nesse método
 	public boolean fazerTransferencia(Conta destino, double quantia) {
-		if(operacaoPossivel(destino, quantia) ) {
-			this.saldo -= quantia;
-			destino.saldo += quantia;
+		if(operacaoPossivel(this, quantia) && saldo >= quantia) {
+			saldo += quantia;
+			destino.setSaldo(destino.getSaldo() + quantia);
 			return true;
 		}
 		return false;
